@@ -18,8 +18,9 @@ public class OptionHandler {
     public OptionHandler(FlippingPlugin plugin) {
         this.plugin = plugin;
     }
-
+    public int id;
     public int calculateOptionValue(Option option, Optional<FlippingItem> highlightedItem, int highlightedItemId) throws InvalidOptionException {
+        id = highlightedItemId;
         int val = 0;
         String propertyString = option.getProperty();
         switch (propertyString) {
@@ -171,9 +172,9 @@ public class OptionHandler {
         char operator = modifier.charAt(0);
         switch (operator) {
             case '-':
-                return Math.round(value - num);
+                return Math.round(value - (wikiPriceCalculation(id, true) - wikiPriceCalculation(id, false) - (wikiPriceCalculation(id, true)/100))*num/100);
             case '+':
-                return Math.round(value + num);
+                return Math.round(value + (wikiPriceCalculation(id, true) - wikiPriceCalculation(id, false) - (wikiPriceCalculation(id, true)/100))*num/100);
             case '*':
                 return Math.round(value * num);
             default:
